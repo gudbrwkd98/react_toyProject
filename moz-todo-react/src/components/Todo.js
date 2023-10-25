@@ -1,9 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 function Todo(props) {
   const [isEditing,setEditing] = useState(false);
   const [newName, setNewname] = useState("");
+  const editFieldRef = useRef(null);
+  const editButtonRef = useRef(null);
+  const wasEditing = usePrevious(isEditing);
   const title = props.name;
+
+  useEffect(() => {
+    if (!wasEditing && isEditing) {
+      editFieldRef.current.focus();
+    }
+    if (wasEditing && !isEditing) {
+      editButtonRef.current.focus();
+    }
+  }, [wasEditing, isEditing]);
 
   function handleChange(e) {
     setNewname(e.target.value);
@@ -22,7 +42,7 @@ function Todo(props) {
         <label className="todo-label" htmlFor={props.id}>
           {props.name}의 새로운 이름
         </label>
-        <input id={props.id} className="todo-text" type="text" onChange={handleChange} />
+        <input id={props.id} className="todo-text" type="text" onChange={handleChange} ref={editFieldRef} />
       </div>
       <div className="btn-group">
       <button
@@ -53,7 +73,7 @@ function Todo(props) {
         </label>
       </div>
       <div className="btn-group">
-        <button type="button" className="btn" onClick={() => setEditing(true)}>
+        <button type="button" className="btn" onClick={() => setEditing(true)}  ref={editButtonRef}>
           편집 <span className="visually-hidden">{props.name}</span>
         </button>
         <button
