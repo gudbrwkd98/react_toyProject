@@ -5,7 +5,8 @@ import GrapePage from './pages/GrapePage';
 import BarGrapePage from './pages/BarGrapePage'; 
 import SimplePieChart from './pages/SimplePieChart';
 import Header from './Header';
-
+import ReactExcelDownload from './pages/ExcelDownload';
+import ContextMenu from './pages/ContextMenu';
 function App(props) {
 
 
@@ -20,6 +21,8 @@ function App(props) {
       <Route path="/graph" element={<GrapePage />}/>
       <Route path="/barGraph" element={<BarGrapePage/>}/>
       <Route path="/pieChart" element={<SimplePieChart/>}/>
+      <Route path="/excelDownload" element={<ReactExcelDownload/>}/>
+      <Route path="/contextMenu" element={<ContextMenu/>}/>
     </Routes>
    </Router>
   );
