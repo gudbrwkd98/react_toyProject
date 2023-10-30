@@ -25,6 +25,8 @@ function ContextMenu() {
                 console.log(event,props);
             case "cut":
                 console.log(event,props);
+            case "reload":
+                window.location.reload(false);
                 break;
         }
     }
